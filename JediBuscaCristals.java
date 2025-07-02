@@ -17,7 +17,7 @@ public class JediBuscaCristals {
 
             lerVet(cristais);
 
-            mergeSortRec(cristais, 0, cristais.length - 1);
+            mergeSortRec(cristais, 0, cristais.length);
 
             int[] consultas = new int[q];
 
@@ -25,11 +25,12 @@ public class JediBuscaCristals {
 
             System.out.println("CASE# " + numCasos);
             for (int i = 0; i < consultas.length; i++) {
-                local = binSearchRec(cristais, 0, consultas.length, consultas[i]);
+                local = seqSearch(cristais, consultas[i]);
                 if (local == -1) {
                     System.out.println(consultas[i] + " not found");
-                } else System.out.println(consultas[i] + " found at " + local);
-                
+                } else
+                    System.out.println(consultas[i] + " found at " + (local + 1));
+
             }
         }
     }
@@ -75,15 +76,13 @@ public class JediBuscaCristals {
         }
     }
 
-    public static int binSearchRec(int[] vet, int inf, int sup, int n) {
-        int meio;
-        if (inf <= sup) {
-            meio = (inf + sup) / 2;
-            return (vet[meio] == n) ? meio
-                    : (n < vet[meio]) ? binSearchRec(vet, inf, meio - 1, n)
-                            : binSearchRec(vet, meio + 1, sup, n);
-        } else
-            return -1;
+    public static int seqSearch(int[] vet, int n) {
+        for (int i = 0; i < vet.length; i++) {
+            if (vet[i] == n) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }
